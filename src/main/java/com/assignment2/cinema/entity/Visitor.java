@@ -1,5 +1,6 @@
 package com.assignment2.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public final class Visitor {
     private double money;
     private int age;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "visitor", cascade = CascadeType.ALL)
     Ticket ticket;
 

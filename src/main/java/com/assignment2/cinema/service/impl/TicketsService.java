@@ -34,6 +34,21 @@ public class TicketsService implements InterfaceTicketsService {
     }
 
     @Override
+    public Ticket getBySeanceAndLineAndSeat(Seance seance, int line, int seat) {
+        return ticketRepository.getBySeanceAndLineAndSeat(seance, line, seat);
+    }
+
+    @Override
+    public Ticket setVisitorToTicket(Visitor visitor, Seance seance, int line, int seat) {
+        Ticket ticket = ticketRepository.getBySeanceAndLineAndSeat(seance, line, seat);
+        if (ticket.getVisitor() != null)
+            throw new IllegalArgumentException("This place is already taken");
+        ticket.setVisitor(visitor);
+        ticketRepository.save(ticket);
+        return ticket;
+    }
+
+    @Override
     public void deleteAllBySeance(Seance seance) {
         ticketRepository.deleteAllBySeance(seance);
     }

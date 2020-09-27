@@ -9,7 +9,14 @@ import java.util.UUID;
 
 public interface InterfaceTicketsService {
     Ticket addTicket(Ticket ticket);
+
     List<Ticket> getAll();
+
     Ticket getById(UUID id);
+
+    Ticket setVisitorToTicket(Visitor visitor, Seance seance, int line, int seat);
+
     void deleteAllBySeance(Seance seance);
+
+    Ticket getBySeanceAndLineAndSeat(Seance seance, int line, int seat);
 }

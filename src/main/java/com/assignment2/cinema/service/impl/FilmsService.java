@@ -1,7 +1,6 @@
 package com.assignment2.cinema.service.impl;
 
 import com.assignment2.cinema.entity.Film;
-import com.assignment2.cinema.entity.Rating;
 import com.assignment2.cinema.repository.FilmRepository;
 import com.assignment2.cinema.service.InterfaceFilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class FilmsService implements InterfaceFilmsService {
     @Autowired
     private FilmRepository filmRepository;
     @Autowired
-    private SeancesService seancesService;
+    private SeancesVisitorService seancesService;
 
     @Override
     public Film addFilm(Film film) {
@@ -41,7 +40,7 @@ public class FilmsService implements InterfaceFilmsService {
 
     @Override
     public void deleteById(UUID id) {
-        seancesService.deleteAllByFilm(filmRepository.findById(id).get());
+        seancesService.deleteAllSeancesByFilm(filmRepository.findById(id).get());
         filmRepository.deleteById(id);
     }
 

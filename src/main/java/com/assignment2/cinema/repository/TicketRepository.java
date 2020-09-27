@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     void deleteAllBySeance(Seance seance);
+
+    Ticket getBySeanceAndLineAndSeat(Seance seance, int line, int seat);
 }
