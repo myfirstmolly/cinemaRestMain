@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface InterfaceSeancesVisitorService {
-    Ticket sellTicket(UUID visitorId, UUID seanceId, int line, int place);
+    Ticket sellTicket(Visitor visitor, Seance seance, int line, int place);
 
     double getCash();
 

@@ -50,9 +50,9 @@ public class SeanceVisitorController {
     }
 
     @GetMapping("/buy")
-    public Ticket buyTicket(@RequestBody TicketRequest ticketRequest) {
-        return seancesVisitorService.sellTicket(ticketRequest.getVisitorId(),
-                ticketRequest.getSeanceId(), ticketRequest.getLine(),
+    public Ticket buyTicket(@RequestBody(required = false) TicketRequest ticketRequest) {
+        return seancesVisitorService.sellTicket(ticketRequest.getVisitor(),
+                ticketRequest.getSeance(), ticketRequest.getLine(),
                 ticketRequest.getPlace());
     }
 

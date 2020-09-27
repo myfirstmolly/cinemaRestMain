@@ -17,11 +17,6 @@ import java.util.UUID;
 public final class Worker {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID workerId;
 
     private String name;
@@ -31,4 +26,11 @@ public final class Worker {
     @Enumerated(EnumType.STRING)
     private Position position;
 
+    public Worker(String name, String surname, int salary, Position position) {
+        workerId = UUID.randomUUID();
+        this.name = name;
+        this.surname = surname;
+        this.salary = salary;
+        this.position = position;
+    }
 }

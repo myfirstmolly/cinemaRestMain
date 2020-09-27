@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface InterfaceWorkerService {
-    Worker addOwner(Worker owner);
     Worker addWorker(Worker worker);
     List<Worker> getWorkers();
     List<Worker> getWorkersByPosition(Position position);

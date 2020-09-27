@@ -21,11 +21,6 @@ import java.util.UUID;
 public final class Hall {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID hallId;
 
     @Column(unique = true)
@@ -39,7 +34,7 @@ public final class Hall {
     private List<Seance> seances;
 
     public Hall(String name, int linesNum, int seatsNum) {
-        System.out.println("here");
+        hallId = UUID.randomUUID();
         this.name = name;
         this.linesNum = linesNum;
         this.seatsNum = seatsNum;

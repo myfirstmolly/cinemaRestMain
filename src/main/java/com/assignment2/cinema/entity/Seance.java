@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,14 +21,9 @@ import java.util.UUID;
 public final class Seance {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID seanceId;
 
-    private Date date;
+    private String seanceDate;
 
     private double price;
 
@@ -46,8 +40,9 @@ public final class Seance {
     @OneToMany(mappedBy = "seance")
     private List<Ticket> ticket;
 
-    public Seance(Date date, double price, Film film, Hall hall) {
-        this.date = date;
+    public Seance(String date, double price, Film film, Hall hall) {
+        seanceId = UUID.randomUUID();
+        this.seanceDate = date;
         this.price = price;
         this.film = film;
         this.hall = hall;

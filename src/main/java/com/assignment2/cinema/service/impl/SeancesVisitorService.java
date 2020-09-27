@@ -26,9 +26,7 @@ public class SeancesVisitorService implements InterfaceSeancesVisitorService {
     private double cash;
 
     @Override
-    public Ticket sellTicket(UUID visitorId, UUID seanceId, int line, int place) {
-        Seance seance = seancesRepository.findById(seanceId).get();
-        Visitor visitor = visitorRepository.findById(visitorId).get();
+    public Ticket sellTicket(Visitor visitor, Seance seance, int line, int place) {
         boolean rightAge;
 
         if (seance.getFilm().getRating() != null)
@@ -90,10 +88,7 @@ public class SeancesVisitorService implements InterfaceSeancesVisitorService {
         int seats = hall.getSeatsNum();
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < seats; j++) {
-                Ticket ticket = new Ticket();
-                ticket.setSeance(seance);
-                ticket.setLine(i + 1);
-                ticket.setSeat(j + 1);
+                Ticket ticket = new Ticket(seance, i + 1, j + 1);
                 ticketsService.addTicket(ticket);
             }
         }

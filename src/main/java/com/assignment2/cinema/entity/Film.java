@@ -20,11 +20,6 @@ import java.util.UUID;
 public final class Film {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID filmId;
 
     @Column(unique = true)
@@ -37,18 +32,12 @@ public final class Film {
     private Rating rating;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
     private List<Seance> seanceList;
-
-    public Film(String name, String director, Integer year, String genre) {
-        this.name = name;
-        this.director = director;
-        this.year = year;
-        this.genre = genre;
-    }
 
     public Film(String name, String director, Integer year, String genre,
                 Rating rating) {
+        filmId = UUID.randomUUID();
         this.name = name;
         this.director = director;
         this.year = year;

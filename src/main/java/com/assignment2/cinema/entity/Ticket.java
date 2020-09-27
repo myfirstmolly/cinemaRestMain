@@ -18,11 +18,6 @@ import java.util.UUID;
 public final class Ticket {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID ticketId;
 
     @JsonBackReference
@@ -38,6 +33,7 @@ public final class Ticket {
     private Visitor visitor;
 
     public Ticket(Seance seance, int line, int seat) {
+        ticketId = UUID.randomUUID();
         this.seance = seance;
         this.line = line;
         this.seat = seat;

@@ -20,11 +20,6 @@ public class WorkerController {
     @Autowired
     private InterfaceWorkerService ownerService;
 
-    @PostMapping("add-owner")
-    public Worker addOwner(@RequestBody Worker worker) {
-        return ownerService.addOwner(worker);
-    }
-
     @PostMapping("add-worker")
     public Worker addWorker(@RequestBody Worker worker) {
         return ownerService.addWorker(worker);

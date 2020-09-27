@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface CinemaRepository extends JpaRepository<Hall, UUID> {
     Hall findByHallId(UUID id);
+    Hall findByName(String name);
 }

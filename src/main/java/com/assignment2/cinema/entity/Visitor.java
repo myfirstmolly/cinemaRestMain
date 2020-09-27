@@ -18,11 +18,6 @@ import java.util.UUID;
 public final class Visitor {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID userId;
 
     private String name;
@@ -34,6 +29,7 @@ public final class Visitor {
     Ticket ticket;
 
     public Visitor(String name, double money, int age) {
+        userId = UUID.randomUUID();
         this.name = name;
         this.money = money;
         this.age = age;
