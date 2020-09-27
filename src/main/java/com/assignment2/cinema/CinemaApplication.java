@@ -1,17 +1,15 @@
 package com.assignment2.cinema;
 
 import com.assignment2.cinema.entity.*;
-import com.assignment2.cinema.request.TicketRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 
 
 @SpringBootApplication
