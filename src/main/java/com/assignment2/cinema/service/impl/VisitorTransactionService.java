@@ -3,6 +3,7 @@ package com.assignment2.cinema.service.impl;
 import com.assignment2.cinema.entity.Seance;
 import com.assignment2.cinema.entity.Ticket;
 import com.assignment2.cinema.entity.Visitor;
+import com.assignment2.cinema.repository.ProjectionRepository;
 import com.assignment2.cinema.repository.TicketsRepository;
 import com.assignment2.cinema.repository.VisitorRepository;
 import com.assignment2.cinema.service.InterfaceVisitorService;
@@ -19,18 +20,28 @@ public final class VisitorTransactionService implements InterfaceVisitorService 
     private VisitorRepository visitorRepository;
     @Autowired
     private TicketsRepository ticketsRepository;
+    @Autowired
+    private ProjectionRepository projectionRepository;
 
     private double cash;
 
     @Override
-    public Ticket buyTicket(Visitor visitor, Seance seance, int line, int place) {
-        boolean rightAge = visitor.getAge() >= seance.getFilm().getRating().getAge();
+    public Ticket buyTicket(UUID visitorId, UUID seanceId, int line, int place) {
+        Seance seance = projectionRepository.getBySeanceId(seanceId);
+        Visitor visitor = visitorRepository.findById(visitorId).get();
+        boolean rightAge = false;
+
+        if(seance.getFilm().getRating() != null)
+            rightAge = visitor.getAge() >= seance.getFilm().getRating().getAge();
+        else rightAge = true;
+
         boolean enoughMoney = visitor.getMoney() >= seance.getPrice();
 
         if(!rightAge || !enoughMoney) return null;
 
         cash += seance.getPrice();
         visitor.setMoney(visitor.getMoney() - seance.getPrice());
+        visitor.setTicket(ticketsRepository.getBySeanceAndLineAndSeat(seance, line, place));
 
         return ticketsRepository.getBySeanceAndLineAndSeat(seance, line, place).
                 setVisitor(visitor);

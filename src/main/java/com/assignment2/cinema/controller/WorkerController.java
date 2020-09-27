@@ -30,18 +30,18 @@ public class WorkerController {
         return ownerService.addWorker(worker);
     }
 
-    @GetMapping("workers/all")
+    @GetMapping
     public List<Worker> getAll() {
         return ownerService.getWorkers();
     }
 
-    @GetMapping("workers/{position}")
+    @GetMapping("{position}")
     public List<Worker> getAllByPosition(@PathVariable(value = "position")
                                                      Position position) {
         return ownerService.getWorkersByPosition(position);
     }
 
-    @DeleteMapping("workers/{workerId}")
+    @DeleteMapping("{workerId}")
     public ResponseEntity<Void> deleteById(@PathVariable(value = "workerId") UUID id) {
         ownerService.deleteWorkerById(id);
         return ResponseEntity.noContent().build();

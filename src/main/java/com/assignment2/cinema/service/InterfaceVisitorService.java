@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface InterfaceVisitorService {
-    Ticket buyTicket(Visitor visitor, Seance seance, int line, int place);
+    Ticket buyTicket(UUID visitorId, UUID seanceId, int line, int place);
     double getCash();
     Visitor addVisitor(Visitor visitor);
     List<Visitor> getAll();

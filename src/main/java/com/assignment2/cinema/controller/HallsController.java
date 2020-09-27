@@ -22,12 +22,8 @@ public class HallsController {
     private InterfaceHallsService cinemaService;
 
     @PostMapping(path = "add-hall")
-    public Hall createHall(@JsonProperty("name") String name,
-                           @JsonProperty("lines") Integer lines,
-                           @JsonProperty("seats") Integer seats) {
-        Hall toBeAdded = new Hall(name, lines, seats);
-        cinemaService.addHall(toBeAdded);
-        return toBeAdded;
+    public Hall createHall(@RequestBody Hall hall) {
+        return cinemaService.addHall(hall);
     }
 
     @GetMapping

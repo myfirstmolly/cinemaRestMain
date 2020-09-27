@@ -2,11 +2,10 @@ package com.assignment2.cinema.controller;
 
 import com.assignment2.cinema.entity.Ticket;
 import com.assignment2.cinema.entity.Visitor;
+import com.assignment2.cinema.request.TicketRequest;
 import com.assignment2.cinema.service.InterfaceVisitorService;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +22,15 @@ public class VisitorTransactionController {
     private InterfaceVisitorService visitorService;
 
     @PostMapping
-    public Visitor addVisitor(@JsonProperty("name") String name,
-                              @JsonProperty("money") double money,
-                              @JsonProperty("age") int age) {
-        return visitorService.addVisitor(new Visitor(name, money, age));
+    public Visitor addVisitor(@RequestBody Visitor visitor) {
+        return visitorService.addVisitor(visitor);
+    }
+
+    @GetMapping("/buy")
+    public Ticket buyTicket(@RequestBody TicketRequest ticketRequest) {
+        return visitorService.buyTicket(ticketRequest.getVisitorId(),
+                ticketRequest.getSeanceId(), ticketRequest.getLine(),
+                ticketRequest.getPlace());
     }
 
     @GetMapping
