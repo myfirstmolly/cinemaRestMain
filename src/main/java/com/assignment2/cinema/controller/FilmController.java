@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +23,16 @@ public class FilmController {
     @PostMapping()
     public Film createFilm(@RequestBody Film film) {
         return filmsService.addFilm(film);
+    }
+
+    @GetMapping()
+    public List<Film> getAll() {
+        return filmsService.getAll();
+    }
+
+    @GetMapping("{filmId}")
+    public Film getById(@PathVariable(value = "filmId") UUID id) {
+        return filmsService.getById(id);
     }
 
     @DeleteMapping("{filmId}")
