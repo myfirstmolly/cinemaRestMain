@@ -1,9 +1,9 @@
 package com.assignment2.cinema;
 
 import com.assignment2.cinema.entity.*;
+import com.assignment2.cinema.request.TicketRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,21 +29,21 @@ public class CinemaApplication {
         Hall medium = new Hall("Medium Hall", 6, 15);
         Hall big = new Hall("Big Hall", 10, 20);
 
-        addEntity("/cinema/add-hall", small);
-        addEntity("/cinema/add-hall", medium);
-        addEntity("/cinema/add-hall", big);
+        addEntity("/cinema", small);
+        addEntity("/cinema", medium);
+        addEntity("/cinema", big);
 
         //add workers
         Worker owner = new Worker("Rita", "Yusupova",
                 800, Position.OWNER);
         Worker ticketSeller = new Worker("Victoria", "Kostenko",
                 200, Position.TICKETSELLER);
-        Worker manager =  new Worker("Andrew", "Petrov",
+        Worker manager = new Worker("Andrew", "Petrov",
                 300, Position.MANAGER);
 
-        addEntity("/worker/add-worker", owner);
-        addEntity( "/worker/add-worker", ticketSeller);
-        addEntity("/worker/add-worker", manager);
+        addEntity("/worker", owner);
+        addEntity("/worker", ticketSeller);
+        addEntity("/worker", manager);
 
         //add film
         Film trainspotting = new Film("Trainspotting", "Danny Boyle",
@@ -66,10 +66,10 @@ public class CinemaApplication {
         Seance sevenSeance = new Seance("2020.09.28T13:00", 200, seven, small);
         Seance midsommarSeance = new Seance("2020.09.28T22:00", 350, midsommar, big);
 
-        addEntity("/service/seances", trainspottingSeance);
-        addEntity("/service/seances", strangersFromHellSeance);
-        addEntity("/service/seances", sevenSeance);
-        addEntity("/service/seances", midsommarSeance);
+        addEntity("/seance", trainspottingSeance);
+        addEntity("/seance", strangersFromHellSeance);
+        addEntity("/seance", sevenSeance);
+        addEntity("/seance", midsommarSeance);
 
         //add visitors
         Visitor marie = new Visitor("Marie", 500, 18);
@@ -79,24 +79,45 @@ public class CinemaApplication {
         Visitor sonya = new Visitor("Sonya", 800, 19);
         Visitor simon = new Visitor("Simon", 700, 47);
 
-        addEntity("/service/visitor", marie);
-        addEntity("/service/visitor", dan);
-        addEntity("/service/visitor", andrew);
-        addEntity("/service/visitor", sonya);
-        addEntity("/service/visitor", mark);
-        addEntity("/service/visitor", simon);
+        addEntity("/visitor", marie);
+        addEntity("/visitor", mark);
+        addEntity("/visitor", dan);
+        addEntity("/visitor", andrew);
+        addEntity("/visitor", sonya);
+        addEntity("/visitor", simon);
 
-        SpringApplication.run(CinemaApplication.class, args);
+        //sell tickets
+        sellTicket(marie, midsommarSeance, 10, 10);
+        sellTicket(mark, trainspottingSeance, 10, 10);
+        sellTicket(dan, strangersFromHellSeance, 6, 7);
+        sellTicket(andrew, sevenSeance, 4, 2);
+        sellTicket(sonya, strangersFromHellSeance, 5, 8);
+        sellTicket(simon, trainspottingSeance, 10, 11);
 
+    }
+
+    private static void sellTicket(Visitor visitor, Seance seance, int line, int place) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String ticketRequest = objectMapper.writeValueAsString(new
+                    TicketRequest(visitor, line, place));
+            HttpEntity<String> httpRequest = new HttpEntity<>(ticketRequest, headers);
+            ResponseEntity<String> response = restTemplate.postForEntity(URL +
+                            "/seance/" + seance.getSeanceId() + "/visitor",
+                    httpRequest, String.class);
+            System.out.println(response);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void addEntity(String path, Object entity) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String hallJson = objectMapper.writeValueAsString(entity);
-            HttpEntity<String> hallJsonHttp = new HttpEntity<>(hallJson, headers);
+            String entityJson = objectMapper.writeValueAsString(entity);
+            HttpEntity<String> entityJsonHttp = new HttpEntity<>(entityJson, headers);
             ResponseEntity<Void> response = restTemplate.postForEntity(URL +
-                    path, hallJsonHttp, Void.class);
+                    path, entityJsonHttp, Void.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

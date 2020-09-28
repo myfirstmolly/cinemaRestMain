@@ -9,4 +9,6 @@ import java.util.UUID;
 @Repository
 public interface HallRepository extends JpaRepository<Hall, UUID> {
     Hall findByName(String name);
+
+    Hall findByHallId(UUID id);
 }

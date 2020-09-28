@@ -2,7 +2,7 @@ package com.assignment2.cinema.service.impl;
 
 import com.assignment2.cinema.entity.Hall;
 import com.assignment2.cinema.repository.HallRepository;
-import com.assignment2.cinema.service.InterfaceHallsService;
+import com.assignment2.cinema.service.HallsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public final class HallsService implements InterfaceHallsService {
+public final class HallsServiceImpl implements HallsService {
 
     @Autowired
     private HallRepository hallRepository;

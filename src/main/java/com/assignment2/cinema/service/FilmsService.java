@@ -5,10 +5,14 @@ import com.assignment2.cinema.entity.Film;
 import java.util.List;
 import java.util.UUID;
 
-public interface InterfaceFilmsService {
+public interface FilmsService {
     Film addFilm(Film film);
+
     List<Film> getAll();
+
     Film getById(UUID id);
+
     Film getByName(String name);
+
     void deleteById(UUID id);
 }

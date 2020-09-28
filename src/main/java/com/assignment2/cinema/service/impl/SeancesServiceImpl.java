@@ -1,10 +1,8 @@
 package com.assignment2.cinema.service.impl;
 
 import com.assignment2.cinema.entity.*;
-import com.assignment2.cinema.repository.CinemaRepository;
 import com.assignment2.cinema.repository.SeanceRepository;
-import com.assignment2.cinema.repository.VisitorRepository;
-import com.assignment2.cinema.service.InterfaceSeancesVisitorService;
+import com.assignment2.cinema.service.SeancesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class SeancesVisitorService implements InterfaceSeancesVisitorService {
+public final class SeancesServiceImpl implements SeancesService {
 
     @Autowired
     private SeanceRepository seancesRepository;
     @Autowired
-    private TicketsService ticketsService;
-    @Autowired
-    private CinemaRepository cinemaRepository;
-    @Autowired
-    private VisitorRepository visitorRepository;
+    private TicketsServiceImpl ticketsService;
 
     private double cash;
 
@@ -40,7 +34,6 @@ public class SeancesVisitorService implements InterfaceSeancesVisitorService {
         cash += seance.getPrice();
         visitor.setMoney(visitor.getMoney() - seance.getPrice());
         Ticket ticket = ticketsService.setVisitorToTicket(visitor, seance, line, place);
-        visitor.setTicket(ticket);
 
         return ticket;
     }
@@ -51,31 +44,6 @@ public class SeancesVisitorService implements InterfaceSeancesVisitorService {
     }
 
     @Override
-    public Visitor addVisitor(Visitor visitor) {
-        return visitorRepository.save(visitor);
-    }
-
-    @Override
-    public List<Visitor> getAllVisitors() {
-        return visitorRepository.findAll();
-    }
-
-    @Override
-    public Visitor getVisitorById(UUID id) {
-        return visitorRepository.findById(id).get();
-    }
-
-    @Override
-    public void updateVisitorBalance(UUID visitorId, double newBalance) {
-        visitorRepository.findById(visitorId).get().setMoney(newBalance);
-    }
-
-    @Override
-    public void deleteVisitorById(UUID id) {
-        visitorRepository.deleteById(id);
-    }
-
-    @Override
     public Seance addSeance(Seance seance) {
         Seance savedSeance = seancesRepository.save(seance);
         createTickets(seance);
@@ -83,7 +51,7 @@ public class SeancesVisitorService implements InterfaceSeancesVisitorService {
     }
 
     public void createTickets(Seance seance) {
-        Hall hall = cinemaRepository.findByHallId(seance.getHall().getHallId());
+        Hall hall = seance.getHall();
         int lines = hall.getLinesNum();
         int seats = hall.getSeatsNum();
         for (int i = 0; i < lines; i++) {

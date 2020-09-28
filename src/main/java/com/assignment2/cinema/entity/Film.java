@@ -1,11 +1,10 @@
 package com.assignment2.cinema.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
@@ -31,7 +30,7 @@ public final class Film {
     @Enumerated(EnumType.STRING)
     private Rating rating;
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
     private List<Seance> seanceList;
 

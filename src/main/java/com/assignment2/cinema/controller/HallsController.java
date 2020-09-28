@@ -1,8 +1,7 @@
 package com.assignment2.cinema.controller;
 
 import com.assignment2.cinema.entity.Hall;
-import com.assignment2.cinema.service.InterfaceHallsService;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.assignment2.cinema.service.HallsService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +18,27 @@ import java.util.UUID;
 public class HallsController {
 
     @Autowired
-    private InterfaceHallsService cinemaService;
+    private HallsService hallsService;
 
-    @PostMapping(path = "add-hall")
+    @PostMapping
     public Hall createHall(@RequestBody Hall hall) {
-        return cinemaService.addHall(hall);
+        return hallsService.addHall(hall);
     }
 
     @GetMapping
     public List<Hall> getAllHalls() {
-        return cinemaService.getAll();
+        return hallsService.getAll();
     }
 
     @GetMapping(path = "{hallId}")
     public Hall getHallById(@PathVariable(value = "hallId") UUID id) {
-        Hall hall = cinemaService.getById(id);
+        Hall hall = hallsService.getById(id);
         return hall;
     }
 
     @DeleteMapping(path = "{hallId}")
     public ResponseEntity<Void> deleteHall(@PathVariable(value = "hallId") UUID id)  {
-        cinemaService.deleteHallById(id);
+        hallsService.deleteHallById(id);
         return ResponseEntity.noContent().build();
     }
 

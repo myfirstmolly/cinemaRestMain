@@ -1,7 +1,8 @@
 package com.assignment2.cinema.controller;
 
-import com.assignment2.cinema.entity.*;
-import com.assignment2.cinema.service.InterfaceWorkerService;
+import com.assignment2.cinema.entity.Position;
+import com.assignment2.cinema.entity.Worker;
+import com.assignment2.cinema.service.WorkerService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ import java.util.UUID;
 public class WorkerController {
 
     @Autowired
-    private InterfaceWorkerService ownerService;
+    private WorkerService ownerService;
 
-    @PostMapping("add-worker")
+    @PostMapping
     public Worker addWorker(@RequestBody Worker worker) {
         return ownerService.addWorker(worker);
     }

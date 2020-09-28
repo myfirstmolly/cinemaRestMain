@@ -7,7 +7,7 @@ import com.assignment2.cinema.entity.Visitor;
 import java.util.List;
 import java.util.UUID;
 
-public interface InterfaceTicketsService {
+public interface TicketsService {
     Ticket addTicket(Ticket ticket);
 
     List<Ticket> getAll();

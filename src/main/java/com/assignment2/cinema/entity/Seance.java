@@ -1,11 +1,9 @@
 package com.assignment2.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
@@ -27,7 +25,6 @@ public final class Seance {
 
     private double price;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "film_id")
     private Film film;

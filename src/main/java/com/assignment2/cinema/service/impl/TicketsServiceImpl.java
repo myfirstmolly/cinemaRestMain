@@ -4,7 +4,7 @@ import com.assignment2.cinema.entity.Seance;
 import com.assignment2.cinema.entity.Ticket;
 import com.assignment2.cinema.entity.Visitor;
 import com.assignment2.cinema.repository.TicketRepository;
-import com.assignment2.cinema.service.InterfaceTicketsService;
+import com.assignment2.cinema.service.TicketsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TicketsService implements InterfaceTicketsService {
+public final class TicketsServiceImpl implements TicketsService {
 
     @Autowired
     TicketRepository ticketRepository;
@@ -41,11 +41,13 @@ public class TicketsService implements InterfaceTicketsService {
     @Override
     public Ticket setVisitorToTicket(Visitor visitor, Seance seance, int line, int seat) {
         Ticket ticket = ticketRepository.getBySeanceAndLineAndSeat(seance, line, seat);
+        if (ticketRepository.getBySeanceAndLineAndSeat(seance, line, seat) == null)
+            throw new IllegalArgumentException("No such place in hall");
         if (ticket.getVisitor() != null)
             throw new IllegalArgumentException("This place is already taken");
-        ticket.setVisitor(visitor);
-        ticketRepository.save(ticket);
-        return ticket;
+        Ticket updated = ticket.setVisitor(visitor);
+        ticketRepository.save(updated);
+        return updated;
     }
 
     @Override

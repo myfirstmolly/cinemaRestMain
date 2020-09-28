@@ -2,7 +2,8 @@ package com.assignment2.cinema.service.impl;
 
 import com.assignment2.cinema.entity.Film;
 import com.assignment2.cinema.repository.FilmRepository;
-import com.assignment2.cinema.service.InterfaceFilmsService;
+import com.assignment2.cinema.repository.SeanceRepository;
+import com.assignment2.cinema.service.FilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class FilmsService implements InterfaceFilmsService {
+public final class FilmsServiceImpl implements FilmsService {
 
     @Autowired
     private FilmRepository filmRepository;
     @Autowired
-    private SeancesVisitorService seancesService;
+    private SeanceRepository seancesRepository;
 
     @Override
     public Film addFilm(Film film) {
@@ -40,7 +41,7 @@ public class FilmsService implements InterfaceFilmsService {
 
     @Override
     public void deleteById(UUID id) {
-        seancesService.deleteAllSeancesByFilm(filmRepository.findById(id).get());
+        seancesRepository.deleteAllByFilm(filmRepository.findById(id).get());
         filmRepository.deleteById(id);
     }
 

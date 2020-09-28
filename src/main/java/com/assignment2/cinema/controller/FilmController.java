@@ -1,7 +1,7 @@
 package com.assignment2.cinema.controller;
 
 import com.assignment2.cinema.entity.Film;
-import com.assignment2.cinema.service.InterfaceFilmsService;
+import com.assignment2.cinema.service.FilmsService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ import java.util.UUID;
 public class FilmController {
 
     @Autowired
-    InterfaceFilmsService filmsService;
+    FilmsService filmsService;
 
-    @PostMapping()
+    @PostMapping
     public Film createFilm(@RequestBody Film film) {
         return filmsService.addFilm(film);
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Film> getAll() {
         return filmsService.getAll();
     }
