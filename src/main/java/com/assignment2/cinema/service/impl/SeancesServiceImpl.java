@@ -1,6 +1,9 @@
 package com.assignment2.cinema.service.impl;
 
+import com.assignment2.cinema.controller.dto.SeanceDto;
 import com.assignment2.cinema.entity.*;
+import com.assignment2.cinema.repository.FilmRepository;
+import com.assignment2.cinema.repository.HallRepository;
 import com.assignment2.cinema.repository.SeanceRepository;
 import com.assignment2.cinema.service.SeancesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,10 @@ public final class SeancesServiceImpl implements SeancesService {
     private SeanceRepository seancesRepository;
     @Autowired
     private TicketsServiceImpl ticketsService;
+    @Autowired
+    private FilmRepository filmRepository;
+    @Autowired
+    private HallRepository hallRepository;
 
     private double cash;
 
@@ -44,7 +51,11 @@ public final class SeancesServiceImpl implements SeancesService {
     }
 
     @Override
-    public Seance addSeance(Seance seance) {
+    public Seance addSeance(SeanceDto seanceDto) {
+        Film film = filmRepository.findById(seanceDto.getFilmID()).get();
+        Hall hall = hallRepository.findById(seanceDto.getHallID()).get();
+        Seance seance = new Seance(seanceDto.getSeanceDate(),
+                seanceDto.getPrice(), film, hall);
         Seance savedSeance = seancesRepository.save(seance);
         createTickets(seance);
         return savedSeance;

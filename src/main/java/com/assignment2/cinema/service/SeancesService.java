@@ -1,5 +1,6 @@
 package com.assignment2.cinema.service;
 
+import com.assignment2.cinema.controller.dto.SeanceDto;
 import com.assignment2.cinema.entity.Film;
 import com.assignment2.cinema.entity.Seance;
 import com.assignment2.cinema.entity.Ticket;
@@ -13,7 +14,7 @@ public interface SeancesService {
 
     double getCash();
 
-    Seance addSeance(Seance seance);
+    Seance addSeance(SeanceDto seance);
 
     List<Seance> getAllSeances();
 

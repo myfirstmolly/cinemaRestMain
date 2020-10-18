@@ -1,5 +1,6 @@
 package com.assignment2.cinema;
 
+import com.assignment2.cinema.controller.dto.SeanceDto;
 import com.assignment2.cinema.entity.*;
 import com.assignment2.cinema.request.TicketRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class CinemaApplication {
 
-    private static final String URL = "http://localhost:8081";
+    private static final String URL = "http://10.110.204.108:8080";
     private static final HttpHeaders headers = new HttpHeaders();
     private static final RestTemplate restTemplate = new RestTemplate();
     private static final HttpEntity<Object> headersEntity = new HttpEntity<>(headers);
@@ -29,9 +30,9 @@ public class CinemaApplication {
         Hall medium = new Hall("Medium Hall", 6, 15);
         Hall big = new Hall("Big Hall", 10, 20);
 
-        addEntity("/cinema", small);
-        addEntity("/cinema", medium);
-        addEntity("/cinema", big);
+        addEntity("/hall", small);
+        addEntity("/hall", medium);
+        addEntity("/hall", big);
 
         //add workers
         Worker owner = new Worker("Rita", "Yusupova",
@@ -61,10 +62,14 @@ public class CinemaApplication {
         addEntity("/film", midsommar);
 
         //add seances
-        Seance trainspottingSeance = new Seance("2020.09.28T19:30", 300, trainspotting, big);
-        Seance strangersFromHellSeance = new Seance("2020.09.28T21:00", 400, strangersFromHell, medium);
-        Seance sevenSeance = new Seance("2020.09.28T13:00", 200, seven, small);
-        Seance midsommarSeance = new Seance("2020.09.28T22:00", 350, midsommar, big);
+        SeanceDto trainspottingSeance = new SeanceDto("2020.09.28T19:30", 300,
+                trainspotting.getFilmId(), big.getHallId());
+        SeanceDto strangersFromHellSeance = new SeanceDto("2020.09.28T21:00", 400,
+                strangersFromHell.getFilmId(), medium.getHallId());
+        SeanceDto sevenSeance = new SeanceDto("2020.09.28T13:00", 200,
+                seven.getFilmId(), small.getHallId());
+        SeanceDto midsommarSeance = new SeanceDto("2020.09.28T22:00", 350,
+                midsommar.getFilmId(), big.getHallId());
 
         addEntity("/seance", trainspottingSeance);
         addEntity("/seance", strangersFromHellSeance);
@@ -96,7 +101,7 @@ public class CinemaApplication {
 
     }
 
-    private static void sellTicket(Visitor visitor, Seance seance, int line, int place) {
+    private static void sellTicket(Visitor visitor, SeanceDto seance, int line, int place) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String ticketRequest = objectMapper.writeValueAsString(new

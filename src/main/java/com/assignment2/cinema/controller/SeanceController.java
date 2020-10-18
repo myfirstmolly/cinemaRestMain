@@ -1,5 +1,6 @@
 package com.assignment2.cinema.controller;
 
+import com.assignment2.cinema.controller.dto.SeanceDto;
 import com.assignment2.cinema.entity.Seance;
 import com.assignment2.cinema.entity.Ticket;
 import com.assignment2.cinema.request.TicketRequest;
@@ -24,7 +25,7 @@ public class SeanceController {
     private SeancesService seancesService;
 
     @PostMapping
-    public Seance addSeance(@RequestBody Seance seance) {
+    public Seance addSeance(@RequestBody SeanceDto seance) {
         return seancesService.addSeance(seance);
     }
 
