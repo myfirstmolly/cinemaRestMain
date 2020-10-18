@@ -1,5 +1,6 @@
 # cinemaRestMain
-1. FilmcController: Get("/film") Post("/film") Delete("/film/{id}")
-2. HallsController: Get("/cinema") Post("/cinema/add-hall") Delete("/cinema/{id}")
-3. SeanceVisitorController: Get("/service/visitor"), Get("/service/seance"), Post("/service/visitor"), Post("/service/seance"), Delete("service/visitor/{id}"), Delete("service/seance/{id}")
-4. WorkerController: Get("/worker") Post("/worker/add-worker") Delete("/worker/id")
+1. FilmController: Get("/film") Post("/film") Delete("/film/{id}")
+2. HallsController: Get("/cinema") Post("/cinema") Delete("/cinema/{id}")
+3. SeanceController: Get("/seance") Post("/seance") Post("/seance/{id}/visitor") Delete("seance/{id}")
+4. VisitorController: Get("/visitor") Post("/visitor") Delete("/visitor/{id}")
+4. WorkerController: Get("/worker") Post("/worker") Delete("/worker/{id}")
