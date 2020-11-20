@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class CinemaApplication {
 
-    private static final String URL = "http://10.110.204.108:8080";
+    private static final String URL = "http://127.0.0.1:50391";
     private static final HttpHeaders headers = new HttpHeaders();
     private static final RestTemplate restTemplate = new RestTemplate();
     private static final HttpEntity<Object> headersEntity = new HttpEntity<>(headers);
@@ -39,7 +39,7 @@ public class CinemaApplication {
                 800, Position.OWNER);
         Worker ticketSeller = new Worker("Victoria", "Kostenko",
                 200, Position.TICKETSELLER);
-        Worker manager = new Worker("Andrew", "Petrov",
+        Worker manager = new Worker("Anton", "Petrov",
                 300, Position.MANAGER);
 
         addEntity("/worker", owner);
@@ -63,13 +63,14 @@ public class CinemaApplication {
 
         //add seances
         SeanceDto trainspottingSeance = new SeanceDto("2020.09.28T19:30", 300,
-                trainspotting.getFilmId(), big.getHallId());
+                big.getHallId(),
+                trainspotting.getFilmId());
         SeanceDto strangersFromHellSeance = new SeanceDto("2020.09.28T21:00", 400,
-                strangersFromHell.getFilmId(), medium.getHallId());
+                medium.getHallId(), strangersFromHell.getFilmId());
         SeanceDto sevenSeance = new SeanceDto("2020.09.28T13:00", 200,
-                seven.getFilmId(), small.getHallId());
+                small.getHallId(), seven.getFilmId());
         SeanceDto midsommarSeance = new SeanceDto("2020.09.28T22:00", 350,
-                midsommar.getFilmId(), big.getHallId());
+                big.getHallId(), midsommar.getFilmId());
 
         addEntity("/seance", trainspottingSeance);
         addEntity("/seance", strangersFromHellSeance);
@@ -91,15 +92,20 @@ public class CinemaApplication {
         addEntity("/visitor", sonya);
         addEntity("/visitor", simon);
 
-        //sell tickets
-        sellTicket(marie, midsommarSeance, 10, 10);
-        sellTicket(mark, trainspottingSeance, 10, 10);
-        sellTicket(dan, strangersFromHellSeance, 6, 7);
-        sellTicket(andrew, sevenSeance, 4, 2);
-        sellTicket(sonya, strangersFromHellSeance, 5, 8);
-        sellTicket(simon, trainspottingSeance, 10, 11);
-
     }
+
+    private static void addEntity(String path, Object entity) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String entityJson = objectMapper.writeValueAsString(entity);
+            HttpEntity<String> entityJsonHttp = new HttpEntity<>(entityJson, headers);
+            ResponseEntity<Void> response = restTemplate.postForEntity(URL +
+                    path, entityJsonHttp, Void.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private static void sellTicket(Visitor visitor, SeanceDto seance, int line, int place) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -116,15 +122,4 @@ public class CinemaApplication {
         }
     }
 
-    private static void addEntity(String path, Object entity) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String entityJson = objectMapper.writeValueAsString(entity);
-            HttpEntity<String> entityJsonHttp = new HttpEntity<>(entityJson, headers);
-            ResponseEntity<Void> response = restTemplate.postForEntity(URL +
-                    path, entityJsonHttp, Void.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }
 }
