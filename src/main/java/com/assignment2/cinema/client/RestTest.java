@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class RestTest {
-    private static final String URL = "http://127.0.0.1:50526";
+    private static final String URL = "http://localhost:8080";
     private static final HttpHeaders headers = new HttpHeaders();
     private static final RestTemplate restTemplate = new RestTemplate();
     private static final HttpEntity<Object> headersEntity = new HttpEntity<>(headers);
@@ -99,7 +99,6 @@ public class RestTest {
             e.printStackTrace();
         }
     }
-
 
     private void sellTicket(Visitor visitor, SeanceDto seance, int line, int place) {
         ObjectMapper objectMapper = new ObjectMapper();

@@ -2,7 +2,6 @@ package com.assignment2.cinema.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.Entity;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @EnableAutoConfiguration
 @Data
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 public final class Worker {
 

@@ -3,7 +3,6 @@ package com.assignment2.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
@@ -14,28 +13,27 @@ import java.util.UUID;
 @EnableAutoConfiguration
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public final class Seance {
 
     @Id
-    private UUID seanceId;
+    private final UUID seanceId;
 
-    private String seanceDate;
+    private final String seanceDate;
 
-    private double price;
+    private final double price;
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    private Film film;
+    private final Film film;
 
     @ManyToOne
     @JoinColumn(name = "hall_id")
-    private Hall hall;
+    private final Hall hall;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "seance")
-    private List<Ticket> ticket;
+    private final List<Ticket> ticket;
 
     public Seance(String date, double price, Film film, Hall hall) {
         seanceId = UUID.randomUUID();

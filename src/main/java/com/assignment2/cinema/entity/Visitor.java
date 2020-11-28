@@ -3,7 +3,6 @@ package com.assignment2.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.CascadeType;
@@ -15,7 +14,6 @@ import java.util.UUID;
 @EnableAutoConfiguration
 @Data
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 public final class Visitor {
 
@@ -37,4 +35,6 @@ public final class Visitor {
         this.age = age;
         this.ticket = null;
     }
+
+
 }

@@ -3,7 +3,6 @@ package com.assignment2.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.UUID;
 @EnableAutoConfiguration
 @Data
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 public final class Ticket {
 
