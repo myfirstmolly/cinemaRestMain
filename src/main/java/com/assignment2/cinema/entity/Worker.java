@@ -3,10 +3,12 @@ package com.assignment2.cinema.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @EnableAutoConfiguration
@@ -17,14 +19,14 @@ import java.util.UUID;
 public final class Worker {
 
     @Id
-    private UUID workerId;
+    private final UUID workerId;
 
-    private String name;
-    private String surname;
-    private int salary;
+    private final String name;
+    private final String surname;
+    private final int salary;
 
     @Enumerated(EnumType.STRING)
-    private Position position;
+    private final Position position;
 
     public Worker(String name, String surname, int salary, Position position) {
         workerId = UUID.randomUUID();

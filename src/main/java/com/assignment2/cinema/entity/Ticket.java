@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import javax.persistence.*;
@@ -18,15 +17,15 @@ import java.util.UUID;
 public final class Ticket {
 
     @Id
-    private UUID ticketId;
+    private final UUID ticketId;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "seance_id")
-    private Seance seance;
+    private final Seance seance;
 
-    private int line;
-    private int seat;
+    private final int line;
+    private final int seat;
 
     @OneToOne
     @JoinColumn(name = "visitor_id")

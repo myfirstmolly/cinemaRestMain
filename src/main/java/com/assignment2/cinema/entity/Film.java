@@ -19,16 +19,16 @@ import java.util.UUID;
 public final class Film {
 
     @Id
-    private UUID filmId;
+    private final UUID filmId;
 
     @Column(unique = true)
-    private String name;
-    private String director;
-    private Integer year;
-    private String genre;
+    private final String name;
+    private final String director;
+    private final Integer year;
+    private final String genre;
 
     @Enumerated(EnumType.STRING)
-    private Rating rating;
+    private final Rating rating;
 
     @JsonIgnore
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
@@ -44,4 +44,7 @@ public final class Film {
         this.rating = rating;
     }
 
+    public UUID getFilmId() {
+        return filmId;
+    }
 }

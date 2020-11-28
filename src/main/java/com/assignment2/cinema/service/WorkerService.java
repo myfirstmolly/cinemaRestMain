@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface WorkerService {
-    Worker addOwner(Worker owner);
-
     Worker addWorker(Worker worker);
 
     List<Worker> getWorkers();
@@ -16,5 +14,4 @@ public interface WorkerService {
     List<Worker> getWorkersByPosition(Position position);
 
     void deleteWorkerById(UUID id);
-
 }

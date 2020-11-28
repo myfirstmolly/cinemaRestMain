@@ -33,7 +33,7 @@ public class WorkerController {
 
     @GetMapping("{position}")
     public List<Worker> getAllByPosition(@PathVariable(value = "position")
-                                                     Position position) {
+                                                 Position position) {
         return ownerService.getWorkersByPosition(position);
     }
 
