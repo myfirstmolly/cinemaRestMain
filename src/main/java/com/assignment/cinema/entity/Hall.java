@@ -17,6 +17,7 @@ public final class Hall {
     private final List<Seance> seances;
 
     public Hall(String name, int linesNum, int seatsNum) {
+        this.hallId = UUID.randomUUID();
         this.name = name;
         this.linesNum = linesNum;
         this.seatsNum = seatsNum;

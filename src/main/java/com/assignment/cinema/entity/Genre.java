@@ -1,6 +1,6 @@
 package com.assignment.cinema.entity;
 
-public enum Rating {
+public enum Genre {
     G,
     PG,
     PG13,

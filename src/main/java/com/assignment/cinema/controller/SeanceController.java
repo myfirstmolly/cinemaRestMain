@@ -1,7 +1,6 @@
 package com.assignment.cinema.controller;
 
-import com.assignment.cinema.controller.dto.SeanceDto;
-import com.assignment.cinema.entity.Seance;
+import com.assignment.cinema.controller.dto.Seance;
 import com.assignment.cinema.entity.Ticket;
 import com.assignment.cinema.request.TicketRequest;
 import com.assignment.cinema.service.SeancesService;
@@ -25,7 +24,7 @@ public class SeanceController {
     private SeancesService seancesService;
 
     @PostMapping
-    public Seance addSeance(@RequestBody SeanceDto seance) {
+    public com.assignment.cinema.entity.Seance addSeance(@RequestBody Seance seance) {
         return seancesService.addSeance(seance);
     }
 
@@ -38,12 +37,12 @@ public class SeanceController {
     }
 
     @GetMapping
-    public List<Seance> getAll() {
+    public List<com.assignment.cinema.entity.Seance> getAll() {
         return seancesService.getAllSeances();
     }
 
     @GetMapping("{seanceId}")
-    public Seance getById(@PathVariable(value = "seanceId") UUID id) {
+    public com.assignment.cinema.entity.Seance getById(@PathVariable(value = "seanceId") UUID id) {
         return seancesService.getSeanceById(id);
     }
 

@@ -23,23 +23,20 @@ public final class Film {
     private final String name;
     private final String director;
     private final Integer year;
-    private final String genre;
 
     @Enumerated(EnumType.STRING)
-    private final Rating rating;
+    private final Genre genre;
 
     @JsonIgnore
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
     private List<Seance> seanceList;
 
-    public Film(String name, String director, Integer year, String genre,
-                Rating rating) {
+    public Film(String name, String director, Integer year, Genre genre) {
         filmId = UUID.randomUUID();
         this.name = name;
         this.director = director;
         this.year = year;
         this.genre = genre;
-        this.rating = rating;
     }
 
     public UUID getFilmId() {

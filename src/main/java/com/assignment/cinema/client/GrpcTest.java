@@ -1,8 +1,6 @@
 package com.assignment.cinema.client;
 
-import com.cinema.film.FilmRequest;
-import com.cinema.film.FilmServiceGrpc;
-import com.cinema.film.Genre;
+import com.cinema.film.*;
 import com.cinema.hall.HallRequest;
 import com.cinema.hall.HallServiceGrpc;
 import com.cinema.seance.Film;
@@ -18,8 +16,8 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
 public class GrpcTest {
-    private final String url = "127.0.0.1";
-    private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 57810).usePlaintext().build();
+    private final String url = "localhost";
+    private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 7080).usePlaintext().build();
     FilmServiceGrpc.FilmServiceBlockingStub filmStub = FilmServiceGrpc.newBlockingStub(channel);
     SeanceServiceGrpc.SeanceServiceBlockingStub seanceStub = SeanceServiceGrpc.newBlockingStub(channel);
     HallServiceGrpc.HallServiceBlockingStub hallStub = HallServiceGrpc.newBlockingStub(channel);
@@ -35,6 +33,10 @@ public class GrpcTest {
                 1995, Genre.R);
         Film midsommar = addFilm("Midsommar", "Ari Aster",
                 2019, Genre.R);
+
+        FilmResponse response = filmStub.byName(FilmByNameRequest.newBuilder().
+                setName("Trainspotting").build());
+        System.out.println(response.toString());
 
         Hall small = addHall("Small hall", 5, 5);
         Hall medium = addHall("Medium Hall", 6, 15);

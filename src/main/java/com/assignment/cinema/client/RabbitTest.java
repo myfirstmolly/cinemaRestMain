@@ -2,7 +2,6 @@ package com.assignment.cinema.client;
 
 import com.assignment.cinema.controller.dto.Seance;
 import com.assignment.cinema.entity.*;
-import com.assignment.cinema.request.TicketRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
@@ -11,8 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class RestTest {
-    private static final String URL = "http://localhost:8080";
+public class RabbitTest {
+    private static final String URL = "http://127.0.0.1:51020";
     private static final HttpHeaders headers = new HttpHeaders();
     private static final RestTemplate restTemplate = new RestTemplate();
     private static final HttpEntity<Object> headersEntity = new HttpEntity<>(headers);
@@ -56,7 +55,7 @@ public class RestTest {
         addEntity("/film", seven);
         addEntity("/film", midsommar);
 
-//      add seances
+        //add seances
         Seance trainspottingSeance = new Seance("2020.09.28T19:30", 300,
                 big.getHallId(),
                 trainspotting.getFilmId());
@@ -94,22 +93,7 @@ public class RestTest {
             String entityJson = objectMapper.writeValueAsString(entity);
             HttpEntity<String> entityJsonHttp = new HttpEntity<>(entityJson, headers);
             ResponseEntity<Void> response = restTemplate.postForEntity(URL +
-                    path, entityJsonHttp, Void.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sellTicket(Visitor visitor, Seance seance, int line, int place) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String ticketRequest = objectMapper.writeValueAsString(new
-                    TicketRequest(visitor, line, place));
-            HttpEntity<String> httpRequest = new HttpEntity<>(ticketRequest, headers);
-            ResponseEntity<String> response = restTemplate.postForEntity(URL +
-                            "/seance/" + seance.getSeanceId() + "/visitor",
-                    httpRequest, String.class);
-            System.out.println(response);
+                    path + "/mq", entityJsonHttp, Void.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,10 @@
 package com.assignment.cinema.service.impl;
 
-import com.assignment.cinema.controller.dto.SeanceDto;
-import com.assignment.cinema.entity.*;
+import com.assignment.cinema.controller.dto.Seance;
+import com.assignment.cinema.entity.Film;
+import com.assignment.cinema.entity.Hall;
+import com.assignment.cinema.entity.Ticket;
+import com.assignment.cinema.entity.Visitor;
 import com.assignment.cinema.repository.FilmRepository;
 import com.assignment.cinema.repository.HallRepository;
 import com.assignment.cinema.repository.SeanceRepository;
@@ -27,7 +30,7 @@ public final class SeancesServiceImpl implements SeancesService {
     private double cash;
 
     @Override
-    public Ticket sellTicket(Visitor visitor, Seance seance, int line, int place) {
+    public Ticket sellTicket(Visitor visitor, com.assignment.cinema.entity.Seance seance, int line, int place) {
         boolean rightAge;
 
         cash += seance.getPrice();
@@ -43,17 +46,17 @@ public final class SeancesServiceImpl implements SeancesService {
     }
 
     @Override
-    public Seance addSeance(SeanceDto seanceDto) {
-        Film film = filmRepository.findById(seanceDto.getFilmID()).get();
-        Hall hall = hallRepository.findById(seanceDto.getHallID()).get();
-        Seance seance = new Seance(seanceDto.getSeanceDate(),
+    public com.assignment.cinema.entity.Seance addSeance(Seance seanceDto) {
+        Film film = filmRepository.findById(seanceDto.getFilmId()).get();
+        Hall hall = hallRepository.findById(seanceDto.getHallId()).get();
+        com.assignment.cinema.entity.Seance seance = new com.assignment.cinema.entity.Seance(seanceDto.getSeanceDate(),
                 seanceDto.getPrice(), film, hall);
-        Seance savedSeance = seancesRepository.save(seance);
+        com.assignment.cinema.entity.Seance savedSeance = seancesRepository.save(seance);
         createTickets(seance);
         return savedSeance;
     }
 
-    public void createTickets(Seance seance) {
+    public void createTickets(com.assignment.cinema.entity.Seance seance) {
         Hall hall = seance.getHall();
         int lines = hall.getLinesNum();
         int seats = hall.getSeatsNum();
@@ -66,12 +69,12 @@ public final class SeancesServiceImpl implements SeancesService {
     }
 
     @Override
-    public List<Seance> getAllSeances() {
+    public List<com.assignment.cinema.entity.Seance> getAllSeances() {
         return seancesRepository.findAll();
     }
 
     @Override
-    public Seance getSeanceById(UUID id) {
+    public com.assignment.cinema.entity.Seance getSeanceById(UUID id) {
         return seancesRepository.findById(id).get();
     }
 
